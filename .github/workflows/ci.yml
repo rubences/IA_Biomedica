@@ -30,3 +30,24 @@ jobs:
             exit 1
           fi
           echo "OK: dataset no versionado."
+
+      - name: Ensure group control sheet is not public
+        shell: bash
+        run: |
+          if git ls-files | grep -Ei 'hoja de control.*\.docx$'; then
+            echo "ERROR: la hoja de control grupal no debe publicarse en el repositorio."
+            exit 1
+          fi
+          echo "OK: hoja de control fuera del repositorio."
+
+      - name: Ensure one canonical deliverable notebook
+        shell: bash
+        run: |
+          notebooks=$(git ls-files '*.ipynb' | wc -l | tr -d ' ')
+          if [ "$notebooks" -ne 1 ]; then
+            echo "ERROR: debe existir un único notebook de entrega; encontrados: $notebooks"
+            git ls-files '*.ipynb'
+            exit 1
+          fi
+          test "$(git ls-files '*.ipynb')" = "MUBIO07_Actividad3_IA_Python_Grupo.ipynb"
+          echo "OK: único notebook canónico de entrega."

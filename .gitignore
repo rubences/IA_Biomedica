@@ -21,6 +21,10 @@ data/Malaria/
 Malaria Data.zip
 Malaria/
 
+# Documentación interna de control grupal: no publicar en GitHub
+*Hoja de control*.docx
+*hoja de control*.docx
+
 # Modelos y resultados reproducibles
 outputs/*
 !outputs/.gitkeep
