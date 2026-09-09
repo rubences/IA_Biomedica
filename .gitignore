@@ -1,0 +1,31 @@
+# Python / Jupyter
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Dataset: NO versionar
+data/Malaria Data.zip
+data/*.zip
+data/extracted/
+data/Malaria/
+Malaria Data.zip
+Malaria/
+
+# Modelos y resultados reproducibles
+outputs/*
+!outputs/.gitkeep
+*.keras
+*.h5
+
+# Logs
+*.log
