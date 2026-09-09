@@ -1,5 +1,7 @@
 # MUBIO07 · Actividad 3 · Inteligencia artificial con Python
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rubences/IA_Biomedica/blob/main/MUBIO07_Actividad3_IA_Python_Grupo.ipynb)
+
 Resolución grupal reproducible de la actividad de **Programación en Python** dedicada a machine learning y deep learning.
 
 ## Equipo
@@ -9,7 +11,7 @@ Resolución grupal reproducible de la actividad de **Programación en Python** d
 - Águeda Sobrino Martínez
 - Yiling Teng Fang
 
-El fichero principal y entregable académico es:
+El fichero principal y único entregable académico es:
 
 ```text
 MUBIO07_Actividad3_IA_Python_Grupo.ipynb
@@ -42,6 +44,8 @@ Se implementan:
 - matrices de confusión;
 - validación cruzada estratificada para reforzar la selección del mejor modelo.
 
+La ejecución de referencia del bloque Iris obtuvo en el hold-out 80/20 un F1 macro de **0,967** para SVM y Naive Bayes, y **0,900** para Random Forest. La validación cruzada de 5 folds favorece ligeramente a **SVM** (F1 macro medio ≈ 0,9599), prácticamente empatada con Random Forest (≈ 0,9598). Los detalles y la interpretación se documentan en `docs/VALIDACION_EMPIRICA.md`.
+
 ### 3. CNN para malaria — 3,5 puntos
 
 Se implementan:
@@ -63,15 +67,22 @@ Se implementan:
 
 ## Dataset suministrado
 
-La auditoría del archivo entregado con la actividad muestra:
+La auditoría real del archivo entregado con la actividad muestra:
 
-| Clase | Imágenes |
+| Métrica | Resultado |
 |---|---:|
+| Imágenes PNG totales | 27.558 |
 | Parasitized | 13.779 |
 | Uninfected | 13.779 |
-| **Total** | **27.558** |
+| Pacientes/grupos identificados | 200 |
+| Duplicados exactos por SHA-256 | 0 |
+| Train | 19.491 imágenes / 140 pacientes |
+| Validation | 4.092 imágenes / 30 pacientes |
+| Test | 3.975 imágenes / 30 pacientes |
 
-El archivo `Malaria Data.zip` ocupa aproximadamente 336 MB y **no debe versionarse en GitHub**.
+Los tres subconjuntos son disjuntos por `patient_id`, evitando que células del mismo paciente aparezcan simultáneamente en entrenamiento y evaluación.
+
+El archivo `Malaria Data.zip` ocupa aproximadamente 336 MB y **no se versiona en GitHub**.
 
 Para Colab se recomienda guardarlo en:
 
@@ -88,12 +99,23 @@ data/Malaria Data.zip
 
 ## Ejecución en Google Colab
 
-1. Subir este repositorio a GitHub.
-2. Abrir `MUBIO07_Actividad3_IA_Python_Grupo.ipynb` desde Colab.
+1. Pulsar el badge **Open in Colab** situado al inicio de este README.
+2. Guardar una copia del notebook en Google Drive si se desea conservar la ejecución.
 3. Compartir el cuaderno con los cuatro miembros del equipo como **Editor**.
 4. Seleccionar una GPU desde `Entorno de ejecución → Cambiar tipo de entorno de ejecución`.
 5. Colocar `Malaria Data.zip` en Google Drive o subirlo temporalmente a `/content`.
 6. Ejecutar todas las celdas en orden.
+7. Conservar las métricas generadas por el propio notebook; no se incluyen resultados CNN inventados o pregrabados.
+
+## Validación empírica
+
+El repositorio diferencia tres niveles de evidencia:
+
+1. **Iris:** ejecución completa de SVM, Random Forest y Naive Bayes con métricas reales y validación cruzada.
+2. **Malaria / datos:** auditoría completa de las 27.558 imágenes, comprobación SHA-256 y partición por 200 grupos de paciente sin intersecciones.
+3. **CNN:** se realizó una comprobación independiente de viabilidad sobre el dataset real que alcanzó, en validación, aproximadamente **96,5 % de accuracy**, **0,963 de F1** y **0,992 de AUC** en la cuarta época. Esta comprobación no se presenta como la ejecución oficial TensorFlow/Keras de la entrega; las métricas finales oficiales deben ser las generadas al ejecutar el notebook en Colab.
+
+Véase `docs/VALIDACION_EMPIRICA.md` para la trazabilidad completa.
 
 ## Entorno local
 
@@ -121,7 +143,8 @@ jupyter lab
 │   └── README.md
 ├── docs/
 │   ├── DATASET_AUDIT.md
-│   └── MATRIZ_RUBRICA.md
+│   ├── MATRIZ_RUBRICA.md
+│   └── VALIDACION_EMPIRICA.md
 ├── scripts/
 │   └── validate_notebook.py
 ├── outputs/
@@ -153,17 +176,17 @@ El problema tiene dos clases y el modelo devuelve una probabilidad `P(Parasitize
 
 ## CI
 
-La CI no intenta entrenar la CNN en GitHub Actions. Valida que:
+GitHub Actions valida automáticamente que:
 
 - el notebook es JSON válido;
 - todas sus celdas de Python tienen sintaxis correcta;
 - contiene los apartados y tecnologías obligatorias;
-- no se ha añadido accidentalmente el dataset de 336 MB.
+- el dataset no está versionado;
+- la hoja de control grupal no se publica en el árbol actual;
+- existe exactamente un notebook de entrega y es el canónico.
 
-El entrenamiento completo debe ejecutarse en Colab con GPU.
+El entrenamiento completo de la CNN se reserva para Colab/GPU, evitando convertir la CI en una prueba costosa y dependiente de hardware.
 
-## Privacidad y entrega
+## Repositorio público y protección de datos
 
-El repositorio contiene únicamente los nombres de los integrantes. No se publican correos electrónicos ni la hoja de control original.
-
-Mientras la actividad esté siendo evaluada, se recomienda mantener el repositorio **privado**.
+El repositorio se mantiene **público** por decisión del equipo. En el árbol actual solo se publican los nombres de los integrantes necesarios para documentar la autoría; no se versionan correos electrónicos, el dataset ni la hoja de control grupal. La hoja de control debe entregarse por el canal académico correspondiente.
